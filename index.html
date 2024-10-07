@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Top Up Game</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Top Up Game</h1>
+        <div class="game-list">
+            <div class="game-item">
+                <h2>Game A</h2>
+                <p>Isi Saldo: <strong>100</strong> Koin</p>
+                <button onclick="topUp('Game A', 100)">Top Up</button>
+            </div>
+            <div class="game-item">
+                <h2>Game B</h2>
+                <p>Isi Saldo: <strong>200</strong> Koin</p>
+                <button onclick="topUp('Game B', 200)">Top Up</button>
+            </div>
+            <div class="game-item">
+                <h2>Game C</h2>
+                <p>Isi Saldo: <strong>300</strong> Koin</p>
+                <button onclick="topUp('Game C', 300)">Top Up</button>
+            </div>
+        </div>
+        <div id="notification" class="notification"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
