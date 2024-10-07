@@ -1,56 +1,74 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-const rocketImg = new Image();
-const obstacleImg = new Image();
+const playerTankImg = new Image();
+const enemyTankImg = new Image();
+const backgroundImg = new Image();
+const shootSound = new Audio('sounds/shoot.mp3');
 const explosionSound = new Audio('sounds/explosion.mp3');
-const scoreSound = new Audio('sounds/score.mp3');
 
-rocketImg.src = 'images/rocket.png';
-obstacleImg.src = 'images/obstacle.png';
+playerTankImg.src = 'images/tank.png';
+enemyTankImg.src = 'images/enemy-tank.png';
+backgroundImg.src = 'images/background.jpg';
 
-let roket = { x: canvas.width / 2 - 15, y: canvas.height - 80, width: 30, height: 60 };
-let rintangan = [];
+let playerTank = { x: 100, y: canvas.height / 2 - 25, width: 50, height: 50 };
+let bullets = [];
+let enemies = [];
 let score = 0;
 let gameOver = false;
-let frame = 0;
-let rintanganSpeed = 3;
 
-function drawRoket() {
-    ctx.drawImage(rocketImg, roket.x, roket.y, roket.width, roket.height);
+// Menambahkan musuh secara acak
+function createEnemyTank() {
+    let enemyTank = {
+        x: canvas.width,
+        y: Math.random() * (canvas.height - 50),
+        width: 50,
+        height: 50,
+        health: 1
+    };
+    enemies.push(enemyTank);
 }
 
-function drawRintangan() {
-    rintangan.forEach(r => {
-        ctx.drawImage(obstacleImg, r.x, r.y, r.width, r.height);
-    });
-}
-
+// Memperbarui game
 function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
     
-    drawRoket();
-    drawRintangan();
-
-    frame++;
-    if (frame % 60 === 0) {
-        let rintanganWidth = Math.random() * (canvas.width - 30) + 30;
-        rintangan.push({ x: Math.random() * (canvas.width - rintanganWidth), y: 0, width: rintanganWidth, height: 20 });
-    }
+    // Gambar tank pemain
+    ctx.drawImage(playerTankImg, playerTank.x, playerTank.y, playerTank.width, playerTank.height);
     
-    rintangan.forEach((r, index) => {
-        r.y += rintanganSpeed;
+    // Gambar peluru
+    bullets.forEach((bullet, bulletIndex) => {
+        bullet.x += 5;
+        ctx.fillStyle = 'red';
+        ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
 
-        // Check collision
-        if (r.y + r.height > roket.y && r.x < roket.x + roket.width && r.x + r.width > roket.x) {
-            gameOver = true;
-            explosionSound.play(); // Play explosion sound
+        // Deteksi tabrakan dengan musuh
+        enemies.forEach((enemy, enemyIndex) => {
+            if (bullet.x < enemy.x + enemy.width && 
+                bullet.x + bullet.width > enemy.x && 
+                bullet.y < enemy.y + enemy.height && 
+                bullet.y + bullet.height > enemy.y) {
+                enemies.splice(enemyIndex, 1);
+                bullets.splice(bulletIndex, 1);
+                explosionSound.play();
+                score++;
+            }
+        });
+
+        if (bullet.x > canvas.width) {
+            bullets.splice(bulletIndex, 1);
         }
-        if (r.y > canvas.height) {
-            rintangan.splice(index, 1);
-            score++;
-            scoreSound.play(); // Play score sound
-            rintanganSpeed += 0.2; // Increase speed for difficulty
+    });
+
+    // Gambar musuh dan gerakan
+    enemies.forEach((enemy, index) => {
+        enemy.x -= 2; // Kecepatan musuh
+        ctx.drawImage(enemyTankImg, enemy.x, enemy.y, enemy.width, enemy.height);
+
+        // Jika musuh keluar dari layar
+        if (enemy.x + enemy.width < 0) {
+            gameOver = true;
         }
     });
 
@@ -60,6 +78,7 @@ function update() {
 function gameLoop() {
     if (!gameOver) {
         update();
+        if (Math.random() < 0.02) createEnemyTank(); // Munculkan musuh secara acak
         requestAnimationFrame(gameLoop);
     } else {
         document.getElementById('restartButton').style.display = 'block';
@@ -68,27 +87,29 @@ function gameLoop() {
 }
 
 function restartGame() {
-    roket.x = canvas.width / 2 - 15;
-    roket.y = canvas.height - 80;
-    rintangan = [];
+    playerTank.x = 100;
+    playerTank.y = canvas.height / 2 - 25;
+    bullets = [];
+    enemies = [];
     score = 0;
     gameOver = false;
-    frame = 0;
-    rintanganSpeed = 3; // reset speed
     document.getElementById('restartButton').style.display = 'none';
     gameLoop();
 }
 
-function moveRoket(event) {
-    if (event.key === 'ArrowLeft' && roket.x > 0) {
-        roket.x -= 15;
-    } else if (event.key === 'ArrowRight' && roket.x < canvas.width - roket.width) {
-        roket.x += 15;
+function moveTank(event) {
+    if (event.key === 'ArrowUp' && playerTank.y > 0) {
+        playerTank.y -= 20;
+    } else if (event.key === 'ArrowDown' && playerTank.y < canvas.height - playerTank.height) {
+        playerTank.y += 20;
+    } else if (event.key === 'Space') {
+        bullets.push({ x: playerTank.x + playerTank.width, y: playerTank.y + 20, width: 10, height: 5 });
+        shootSound.play();
     }
 }
 
-document.addEventListener('keydown', moveRoket);
+document.addEventListener('keydown', moveTank);
 document.getElementById('restartButton').addEventListener('click', restartGame);
 
-// Start the game
+// Mulai permainan
 gameLoop();
