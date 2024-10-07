@@ -3,16 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tank WAR</title>
+    <title>Top-Up Game Online</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>Perang Tank</h1>
-        <canvas id="gameCanvas" width="800" height="600"></canvas>
-        <div id="score">Skor: 0</div>
-        <button id="restartButton" style="display:none;">Mulai Lagi</button>
-    </div>
+    <header>
+        <div class="container">
+            <h1>Top-Up Game Online</h1>
+            <nav>
+                <ul>
+                    <li><a href="#games">Game</a></li>
+                    <li><a href="#about">Tentang Kami</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container">
+            <h2>Top-Up Mudah dan Cepat!</h2>
+            <p>Isi ulang saldo game favorit Anda dalam hitungan menit.</p>
+            <a href="#games" class="btn">Lihat Game</a>
+        </div>
+    </section>
+
+    <section id="games">
+        <div class="container">
+            <h2>Game Populer</h2>
+            <div class="game">
+                <img src="https://via.placeholder.com/300x150" alt="Game 1">
+                <h3>Game A</h3>
+                <p>Isi ulang saldo untuk Game A dengan cepat dan aman.</p>
+                <button class="topup">Top-Up Sekarang</button>
+            </div>
+            <div class="game">
+                <img src="https://via.placeholder.com/300x150" alt="Game 2">
+                <h3>Game B</h3>
+                <p>Isi ulang saldo untuk Game B dalam hitungan detik.</p>
+                <button class="topup">Top-Up Sekarang</button>
+            </div>
+            <div class="game">
+                <img src="https://via.placeholder.com/300x150" alt="Game 3">
+                <h3>Game C</h3>
+                <p>Isi ulang saldo untuk Game C dengan harga terbaik.</p>
+                <button class="topup">Top-Up Sekarang</button>
+            </div>
+            <!-- Tambahkan lebih banyak game sesuai kebutuhan -->
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>Tentang Kami</h2>
+            <p>Kami menyediakan solusi top-up game online terpercaya dan mudah.Pastikan Anda tidak melewatkan pengalaman bermain yang lebih menyenangkan!</p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Kontak Kami</h2>
+            <form id="contactForm">
+                <label for="name">Nama:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Pesan:</label>
+                <textarea id="message" name="message" required></textarea>
+
+                <button type="submit">Kirim</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Top-Up Game Online. Semua Hak Dilindungi.</p>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
