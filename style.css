@@ -19,10 +19,14 @@ h1 {
     color: #333;
 }
 
+h3 {
+    margin-top: 30px;
+}
+
 .game-list {
     display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .game-item {
@@ -30,14 +34,18 @@ h1 {
     color: white;
     padding: 20px;
     border-radius: 10px;
-    width: 200px;
+    width: 30%; /* Gunakan 30% untuk 3 item di satu baris */
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin: 10px 0; /* Margin vertikal untuk space antar item */
 }
 
-.game-item h2 {
-    margin: 0;
-    font-size: 1.5em;
+input[type="number"] {
+    width: calc(100% - 20px); /* Ambil seluruh lebar kurang padding */
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
 }
 
 button {
@@ -61,4 +69,16 @@ button:hover {
     color: #721c24;
     border: 1px solid #f5c6cb;
     display: none; /* Tersembunyi secara default */
+}
+
+.transaction-list {
+    list-style: none;
+    padding: 0;
+}
+
+.transaction-list li {
+    background: #e9ecef;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
 }
