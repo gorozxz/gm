@@ -1,41 +1,141 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: #333;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    height: 100vh;
+    line-height: 1.6;
 }
 
 .container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    background: #FF4B1F; /* Warna yang cerah */
+    background: -webkit-linear-gradient(to right, #FF416C, #FF4B1F); /* For Safari 5.1 to 6.0 */
+    background: linear-gradient(to right, #FF416C, #FF4B1F);
+    color: white;
+    padding: 15px 0;
     text-align: center;
 }
 
-canvas {
-    background: url('images/background.jpg') no-repeat center center;
-    background-size: cover;
-    border: 1px solid #fff;
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#hero {
+    background: url('https://images.unsplash.com/photo-1501701347604-1473e7ebc82e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDEwfHxnaWZ8ZW58MHx8fHwxNjYxMzMwNTc4&ixlib=rb-1.2.1&q=80&w=1080') no-repeat center center/cover;
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.game {
+    background-color: #FFF7E3; /* Warna latar belakang cerah untuk kotak game */
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.game img {
+    max-width: 100%;
     border-radius: 10px;
 }
 
-#score {
-    font-size: 1.5em;
-    margin: 20px 0;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
+.topup {
+    background-color: #FF416C; /* Warna tombol */
+    color: white;
+    padding: 10px;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.topup:hover {
+    background-color: #FF4B1F; /* Warna tombol saat hover */
+}
+
+.game:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #333;
     color: white;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin: 10px 0 5px;
+}
+
+input, textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    background-color: #FF416C; /* Warna tombol kirim */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #0056b3;
+button[type="submit"]:hover {
+    background-color: #FF4B1F; /* Warna tombol kirim saat hover */
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+    nav ul li {
+        display: block;
+        margin: 5px 0;
+    }
+
+    #hero {
+        padding: 80px 10px;
+    }
+
+    .game {
+        margin: 0 auto;
+        width: 90%;
+    }
 }
