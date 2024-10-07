@@ -16,8 +16,6 @@ body {
 }
 
 header {
-    background: #FF4B1F; /* Warna yang cerah */
-    background: -webkit-linear-gradient(to right, #FF416C, #FF4B1F); /* For Safari 5.1 to 6.0 */
     background: linear-gradient(to right, #FF416C, #FF4B1F);
     color: white;
     padding: 15px 0;
