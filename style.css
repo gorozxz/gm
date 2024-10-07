@@ -1,7 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background: url('images/space-background.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background: #333;
     color: white;
     display: flex;
     flex-direction: column;
@@ -13,11 +12,11 @@ body {
 
 .container {
     text-align: center;
-    position: relative;
 }
 
 canvas {
-    background-color: rgba(0, 0, 0, 0.8);
+    background: url('images/background.jpg') no-repeat center center;
+    background-size: cover;
     border: 1px solid #fff;
     border-radius: 10px;
 }
