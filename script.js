@@ -1,33 +1,37 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-let roket = { x: canvas.width / 2 - 15, y: canvas.height - 60, width: 30, height: 60 };
+const rocketImg = new Image();
+const obstacleImg = new Image();
+const explosionSound = new Audio('sounds/explosion.mp3');
+const scoreSound = new Audio('sounds/score.mp3');
+
+rocketImg.src = 'images/rocket.png';
+obstacleImg.src = 'images/obstacle.png';
+
+let roket = { x: canvas.width / 2 - 15, y: canvas.height - 80, width: 30, height: 60 };
 let rintangan = [];
 let score = 0;
 let gameOver = false;
 let frame = 0;
+let rintanganSpeed = 3;
 
 function drawRoket() {
-    ctx.fillStyle = 'yellow';
-    ctx.fillRect(roket.x, roket.y, roket.width, roket.height);
+    ctx.drawImage(rocketImg, roket.x, roket.y, roket.width, roket.height);
 }
 
 function drawRintangan() {
-    ctx.fillStyle = 'red';
     rintangan.forEach(r => {
-        ctx.fillRect(r.x, r.y, r.width, r.height);
+        ctx.drawImage(obstacleImg, r.x, r.y, r.width, r.height);
     });
 }
 
 function update() {
-    // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Draw roket dan rintangan
     drawRoket();
     drawRintangan();
 
-    // Update dan random rintangan
     frame++;
     if (frame % 60 === 0) {
         let rintanganWidth = Math.random() * (canvas.width - 30) + 30;
@@ -35,14 +39,18 @@ function update() {
     }
     
     rintangan.forEach((r, index) => {
-        r.y += 3;
+        r.y += rintanganSpeed;
+
         // Check collision
         if (r.y + r.height > roket.y && r.x < roket.x + roket.width && r.x + r.width > roket.x) {
             gameOver = true;
+            explosionSound.play(); // Play explosion sound
         }
         if (r.y > canvas.height) {
             rintangan.splice(index, 1);
             score++;
+            scoreSound.play(); // Play score sound
+            rintanganSpeed += 0.2; // Increase speed for difficulty
         }
     });
 
@@ -61,11 +69,12 @@ function gameLoop() {
 
 function restartGame() {
     roket.x = canvas.width / 2 - 15;
-    roket.y = canvas.height - 60;
+    roket.y = canvas.height - 80;
     rintangan = [];
     score = 0;
     gameOver = false;
     frame = 0;
+    rintanganSpeed = 3; // reset speed
     document.getElementById('restartButton').style.display = 'none';
     gameLoop();
 }
@@ -81,5 +90,5 @@ function moveRoket(event) {
 document.addEventListener('keydown', moveRoket);
 document.getElementById('restartButton').addEventListener('click', restartGame);
 
-// Mulai permainan
+// Start the game
 gameLoop();
