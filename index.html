@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
     <header>
@@ -44,51 +45,16 @@
                     <li>500 Diamond - Rp 70.000</li>
                     <li>1000 Diamond - Rp 150.000</li>
                 </ul>
-                <button class="topup">Top-Up Sekarang</button>
+                <button class="topup" onclick="openPayment('Mobile Legends', 15000)">Top-Up Sekarang</button>
             </div>
-            <div class="game">
-                <img src="https://via.placeholder.com/300x150?text=Free+Fire" alt="Free Fire">
-                <h3>Free Fire</h3>
-                <p>Isi ulang diamond untuk membeli karakter, skin, dan item lainnya.</p>
-                <p><strong>Pilihan Paket:</strong></p>
-                <ul>
-                    <li>100 Diamond - Rp 18.000</li>
-                    <li>500 Diamond - Rp 85.000</li>
-                    <li>1000 Diamond - Rp 160.000</li>
-                </ul>
-                <button class="topup">Top-Up Sekarang</button>
-            </div>
-            <div class="game">
-                <img src="https://via.placeholder.com/300x150?text=PUBG+Mobile" alt="PUBG Mobile">
-                <h3>PUBG Mobile</h3>
-                <p>Isi ulang UC untuk mendapatkan senjata dan kostum eksklusif.</p>
-                <p><strong>Pilihan Paket:</strong></p>
-                <ul>
-                    <li>60 UC - Rp 15.000</li>
-                    <li>300 UC - Rp 70.000</li>
-                    <li>600 UC - Rp 135.000</li>
-                </ul>
-                <button class="topup">Top-Up Sekarang</button>
-            </div>
-            <div class="game">
-                <img src="https://via.placeholder.com/300x150?text=Genshin+Impact" alt="Genshin Impact">
-                <h3>Genshin Impact</h3>
-                <p>Top-up Primogem untuk gacha dan mendapatkan karakter baru.</p>
-                <p><strong>Pilihan Paket:</strong></p>
-                <ul>
-                    <li>60 Primogem - Rp 20.000</li>
-                    <li>300 Primogem - Rp 90.000</li>
-                    <li>600 Primogem - Rp 170.000</li>
-                </ul>
-                <button class="topup">Top-Up Sekarang</button>
-            </div>
+            <!-- Tambahkan game lain di sini dengan tombol Top-Up yang sama -->
         </div>
     </section>
 
     <section id="about">
         <div class="container">
             <h2>Tentang Kami</h2>
-            <p>Kami menyediakan solusi top-up game online terpercaya dan mudah. Pastikan Anda tidak melewatkan pengalaman bermain yang lebih menyenangkan dengan isi ulang saldo game favorit Anda di sini!</p>
+            <p>Kami menyediakan solusi top-up game online terpercaya dan mudah.</p>
         </div>
     </section>
 
@@ -110,6 +76,20 @@
         </div>
     </section>
 
+    <!-- Modal Pembayaran -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Bayar</h2>
+            <form id="payment-form">
+                <label for="card-element">Kartu Pembayaran</label>
+                <div id="card-element"></div>
+                <button id="submit">Bayar Sekarang</button>
+                <div id="card-errors" role="alert"></div>
+            </form>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
             <p>&copy; 2023 Top-Up Game Online. Semua Hak Dilindungi.</p>
@@ -117,5 +97,38 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        const stripe = Stripe('YOUR_PUBLIC_STRIPE_KEY'); // Ganti dengan kunci publik Stripe Anda
+        const elements = stripe.elements();
+        const cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+        document.getElementById('payment-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const {paymentMethod, error} = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+            });
+
+            if (error) {
+                document.getElementById('card-errors').textContent = error.message;
+            } else {
+                alert(`Pembayaran berhasil menggunakan ${paymentMethod.card.brand} ${paymentMethod.card.last4}.`);
+                closeModal();
+                // Kirim informasi ke server untuk diproses lebih lanjut
+            }
+        });
+
+        function openPayment(gameName, gamePrice) {
+            // Simpan gameName dan gamePrice untuk digunakan saat pembayaran
+            // Tampilkan modal pembayaran
+            document.getElementById('paymentModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = "none";
+        }
+    </script>
 </body>
 </html>
