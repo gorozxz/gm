@@ -1,9 +1,9 @@
-document.getElementById('contactForm').addEventListener('submit', function(event){
+document.getElementById('contactForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
+    const name = document.getElementById('GOROTOPUP').value;
+    const email = document.getElementById('akuntiktok1813@gmail.com').value;
+    const message = document.getElementById('Terimakasih sudah menggunakan website kami. Harap tunggu sebentar yaa').value;
 
     alert(`Terima kasih telah menghubungi kami, ${name}. Kami akan segera merespon email Anda di ${email}.`);
 
