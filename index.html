@@ -3,35 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Roket</title>
     <link rel="stylesheet" href="style.css">
-    <title>Top Up Game</title>
 </head>
 <body>
     <div class="container">
-        <h1>Top Up Game</h1>
-        <div class="game-list">
-            <div class="game-item">
-                <h2>Game A</h2>
-                <p>Minimum Top Up: <strong>100</strong> Koin</p>
-                <input type="number" id="topupAmountA" placeholder="Masukkan jumlah koin" />
-                <button onclick="topUp('Game A')">Top Up</button>
-            </div>
-            <div class="game-item">
-                <h2>Game B</h2>
-                <p>Minimum Top Up: <strong>200</strong> Koin</p>
-                <input type="number" id="topupAmountB" placeholder="Masukkan jumlah koin" />
-                <button onclick="topUp('Game B')">Top Up</button>
-            </div>
-            <div class="game-item">
-                <h2>Game C</h2>
-                <p>Minimum Top Up: <strong>300</strong> Koin</p>
-                <input type="number" id="topupAmountC" placeholder="Masukkan jumlah koin" />
-                <button onclick="topUp('Game C')">Top Up</button>
-            </div>
-        </div>
-        <div id="notification" class="notification"></div>
-        <h3>Riwayat Transaksi</h3>
-        <ul id="transactionHistory" class="transaction-list"></ul>
+        <h1>Game Roket</h1>
+        <canvas id="gameCanvas" width="400" height="600"></canvas>
+        <div id="score">Skor: 0</div>
+        <button id="restartButton" style="display:none;">Mulai Lagi</button>
     </div>
     <script src="script.js"></script>
 </body>
